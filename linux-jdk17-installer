@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Check required tools are installed
+required_tools=("curl" "wget" "tar")
+for tool in "${required_tools[@]}"; do
+    if ! command -v "$tool" &> /dev/null; then
+        echo "$tool is required but not installed. Aborting."
+        exit 1
+    fi
+done
+
+
+# Define the base directory relative to the script's location
+cd "$(dirname "$0")" || exit
+
+# Define the target directory for JDKs one level down
+TARGET_DIR="../resources"
+
+# Ensure the target directory exists
+mkdir -p "$TARGET_DIR"
+
+# Function to compare versions, returns 1 if first version is greater, -1 if less, 0 if equal
+version_greater() {
+    [[ "$(printf '%s\n' "$1" "$2" | sort -V | head -n1)" != "$1" ]]
+}
+
+# --- Download and manage Temurin JDK ---
+TEMURIN_API_URL="https://api.github.com/repos/adoptium/temurin17-binaries/releases/latest"
+TEMURIN_DOWNLOAD_URL=$(curl -s $TEMURIN_API_URL | grep "browser_download_url" | grep "jdk_x64_linux_hotspot" | grep -v "debug" | grep -v "sha256" | grep -v ".sig" | grep -v ".json" | grep ".tar.gz" | cut -d '"' -f 4)
+TEMURIN_FILENAME=$(basename "$TEMURIN_DOWNLOAD_URL")
+
+# Download and extract the Temurin JDK
+wget -O "$TARGET_DIR/$TEMURIN_FILENAME" "$TEMURIN_DOWNLOAD_URL"
+tar xfv "$TARGET_DIR/$TEMURIN_FILENAME" -C "$TARGET_DIR"
+rm "$TARGET_DIR/$TEMURIN_FILENAME"
+
+# --- Version management for both JDKs ---
+newest_temurin=""
+
+
+# Find the newest JDK and GraalVM JDK
+for dir in "$TARGET_DIR/jdk-"* "$TARGET_DIR/graalvm-jdk-17"*; do
+    if [[ -d "$dir" ]]; then
+            current_version="${dir#"$TARGET_DIR"/jdk-}"  # Extract version from directory name
+            if [[ -z "$newest_temurin" || $(version_greater "$current_version" "${newest_temurin#"$TARGET_DIR"/jdk-}") ]]; then
+                newest_temurin="$dir"
+            fi
+          
+         
+    fi
+    
+done
+
+# Remove older JDKs and GraalVM JDKs
+for dir in "$TARGET_DIR/jdk-"*; do
+    if [[ -d "$dir" && "$dir" != "$newest_temurin"]]; then
+        echo "Removing older directory: $dir"
+        rm -rf "$dir"
+    fi
+done
+
+echo "Newest JDK retained: $newest_temurin"
+
+
+
+echo "Copying launchers"
+cp ../launchers/*.sh ../
+
+echo "Done!"
