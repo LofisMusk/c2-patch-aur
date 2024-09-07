@@ -2,10 +2,10 @@
 export DIR="$(dirname "$(readlink -f "$0")")"  # Get the script's directory
 
 # Find the Java executable for JDK-17, excluding GraalVM versions
-export javaexec=$(find "$DIR/libs" -type f -name 'java' | grep 'jdk-17' | grep -v 'graalvm')
+export javaexec=$(find "$DIR/resources" -type f -name 'java' | grep 'jdk-17' | grep -v 'graalvm')
 
 # Find the Java executable for GraalVM JDK-17
-export javaexecgraal=$(find "$DIR/libs" -type f -name 'java' | grep 'graalvm-jdk-17')
+export javaexecgraal=$(find "$DIR/resources" -type f -name 'java' | grep 'graalvm-jdk-17')
 
 # Convert absolute paths to relative for output
 javaexec_rel="${javaexec#$DIR/}"
