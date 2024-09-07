@@ -4,18 +4,12 @@ export DIR="$(dirname "$(readlink -f "$0")")"  # Get the script's directory
 # Find the Java executable for JDK-17, excluding GraalVM versions
 export javaexec=$(find "$DIR/resources" -type f -name 'java' | grep 'jdk-17' | grep -v 'graalvm')
 
-# Find the Java executable for GraalVM JDK-17
-#export javaexecgraal=$(find "$DIR/resources" -type f -name 'java' | grep 'graalvm-jdk-17')
-
 # Convert absolute paths to relative for output
 javaexec_rel="${javaexec#$DIR/}"
-javaexecgraal_rel="${javaexecgraal#$DIR/}"
 
 # Check user input to select the legacy Java version
 if [[ "$1" == "legacy" ]]; then
-        java_to_use=$javaexecgraal
-    java_to_use_rel=$javaexecgraal_rel
-    echo "Using GraalVM Java executable by default at: $java_to_use_rel"
+echo "this is not what youre supposed to see!"
 #doesnt use graalvm
 else
 java_to_use=$javaexec

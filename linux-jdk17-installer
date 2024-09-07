@@ -37,20 +37,6 @@ rm "$TARGET_DIR/$TEMURIN_FILENAME"
 # --- Version management for both JDKs ---
 newest_temurin=""
 
-
-# Find the newest JDK and GraalVM JDK
-for dir in "$TARGET_DIR/jdk-"* "$TARGET_DIR/graalvm-jdk-17"*; do
-    if [[ -d "$dir" ]]; then
-            current_version="${dir#"$TARGET_DIR"/jdk-}"  # Extract version from directory name
-            if [[ -z "$newest_temurin" || $(version_greater "$current_version" "${newest_temurin#"$TARGET_DIR"/jdk-}") ]]; then
-                newest_temurin="$dir"
-            fi
-          
-         
-    fi
-    
-done
-
 # Remove older JDKs and GraalVM JDKs
 for dir in "$TARGET_DIR/jdk-"*; do
     if [[ -d "$dir" && "$dir" != "$newest_temurin"]]; then
