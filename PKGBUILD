@@ -14,6 +14,9 @@ package() {
 package() {
     mkdir -p "${pkgdir}/opt"
     mkdir -p "${pkgdir}/usr/bin"
+    mkdir -p "${pkgdir}/c2temp"
+    cd "${pkgdir}/c2temp"
+    git clone https://github.com/LofisMusk/c2-patch-aur
     install -d "${pkgdir}/opt/cultris2"
 
 
