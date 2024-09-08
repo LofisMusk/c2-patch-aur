@@ -5,7 +5,7 @@ pkgdesc="Cultris II is one of the fastest Tetris®-clones ever! Train your refle
 arch=('x86_64')
 url="https://github.com/zDEFz/c2-patch"
 license=('none')
-depends=('jdk17-temurin' 'openal')
+depends=('java-runtime' 'openal')
 source=("https://github.com/LofisMusk/c2-patch-aur")
 sha256sums=('SKIP')
 
