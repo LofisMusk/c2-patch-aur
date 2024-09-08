@@ -12,8 +12,12 @@ sha256sums=('SKIP')
 package() {
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/usr/share/${pkgname}"
-    
+    mkdir -p ~/.cultristemp
+    cd ~/.cultristemp
+    git clone https://github.com/LofisMusk/c2-patch-aur
     install -Dm755 "cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
+
     
     cp -dpr --no-preserve=ownership "${srcdir}/etc" "${srcdir}/usr" "${pkgdir}"
+    rm -rf ~/.cultristemp
 }
