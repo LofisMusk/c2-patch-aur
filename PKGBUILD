@@ -28,7 +28,7 @@ package() {
     # Install libraries
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
 
-    # Install script
+    # Install startup scripts
     install -Dm755 "cultris2.sh" "$pkgdir/usr/bin/cultris2"
     install -Dm755 "c2settings.sh" "$pkgdir/usr/bin/c2settings"
     install -Dm755 "colorpicker.sh" "$pkgdir/usr/bin/colorpicker"
@@ -38,6 +38,6 @@ package() {
 
     # Install desktop entries
     install -Dm644 "cultris2.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
-    install -Dm644 "c2settings.desktop" "$pkgdir/usr/share/applications/c2settings.desktop"
-    install -Dm644 "colorpicker.desktop" "$pkgdir/usr/share/applications/colorpicker.desktop"
+    install -Dm644 "c2settings.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
+    install -Dm644 "colorpicker.desktop" "$pkgdir/usr/share/applications/${pkgname}-colorpicker.desktop"
 }
