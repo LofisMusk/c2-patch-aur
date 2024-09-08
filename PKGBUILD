@@ -6,7 +6,7 @@ arch=('x86_64')
 url="https://github.com/zDEFz/c2-patch"
 license=('none')
 depends=('jdk-openjdk')
-source=("https://github.com/LofisMusk/c2-patch-aur")
+source=("https://github.com/LofisMusk/c2-patch-aur.git")
 sha256sums=('SKIP')
 
 
@@ -16,7 +16,7 @@ package() {
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/c2temp"
     cd "${pkgdir}/c2temp"
-    git clone https://github.com/LofisMusk/c2-patch-aur
+    git clone https://github.com/LofisMusk/c2-patch-aur.git
     install -d "${pkgdir}/opt/cultris2"
 
 
