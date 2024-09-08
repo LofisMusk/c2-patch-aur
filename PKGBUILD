@@ -11,13 +11,11 @@ sha256sums=('SKIP')
 
 
 package() {
-    mkdir -p "${pkgdir}/opt"
+    mkdir -p "${pkgdir}/opt/${pkgname}"
     mkdir -p "${pkgdir}/usr/bin"
     
-    install -d "${pkgdir}/opt/${pkgname}/"
-    install -m755 "cultris2.jar" "${pkgdir}/opt/${pkgname}/"
-    cp -r "libs" "${pkgdir}/opt/${pkgname}/"
+    install -m755 "${srcdir}/c2-patch-aur/cultris2.jar" "${pkgdir}/opt/${pkgname}/"
+    cp -r "${srcdir}/c2-patch-aur/libs" "${pkgdir}/opt/${pkgname}/"
 
-    install -d "${pkgdir}/usr/bin/"
-    install -m755 "cultris2.sh" "${pkgdir}/usr/bin/"
+    install -m755 "${srcdir}/c2-patch-aur/cultris2.sh" "${pkgdir}/usr/bin/"
 }
