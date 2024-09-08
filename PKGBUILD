@@ -30,6 +30,8 @@ package() {
 
     # Install script
     install -Dm755 "cultris2.sh" "$pkgdir/usr/bin/cultris2"
+    install -Dm755 "c2settings.sh" "$pkgdir/usr/bin/c2settings"
+    install -Dm755 "colorpicker.sh" "$pkgdir/usr/bin/colorpicker"
 
     # Install icon
     install -Dm644 "icon.png" "$pkgdir/opt/cultris2/icon.png"
@@ -39,6 +41,3 @@ package() {
     install -Dm644 "c2settings.desktop" "$pkgdir/usr/share/applications/c2settings.desktop"
     install -Dm644 "colorpicker.desktop" "$pkgdir/usr/share/applications/colorpicker.desktop"
 }
-
-# Add the .install file
-install="$pkgname.install"
