@@ -21,7 +21,7 @@ cd "$DIR"
 
 # Check if the chosen Java executable is found and launch the application
 if [ -f "$java_to_use" ]; then
-    "$java_to_use" -Djava.library.path="$DIR/libs/" -jar "$DIR/cultris2.jar"
+    "$java_to_use" -Djava.library.path="/opt/cultris2/libs" -jar "/opt/cultris2/cultris2.jar"
 else
     echo "Java executable not found. Please ensure you've installed a JDK or GraalVM correctly in the resources directory."
 fi
