@@ -11,20 +11,10 @@ sha256sums=('SKIP')
 
 
 package() {
-package() {
-    mkdir -p "${pkgdir}/opt"
-    mkdir -p "${pkgdir}/usr/bin"
-    mkdir -p "${pkgdir}/c2temp"
-    cd "${pkgdir}/c2temp"
-    git clone https://github.com/LofisMusk/c2-patch-aur.git
-    install -d "${pkgdir}/opt/cultris2"
+    install -d "${pkgdir}/opt/${pkgname}/"
+    install -m755 "cultris2.jar" "${pkgdir}/opt/${pkgname}/"
+    cp -r "libs" "${pkgdir}/opt/${pkgname}/"
 
-
-    install -Dm644 "${srcdir}/${pkgname}/cultris2.jar" "${pkgdir}/opt/cultris2/cultris2.jar"
-    cp -r "${srcdir}/${pkgname}/libs" "{$pkgdir}/opt/cultris2/libs"
-
-    install -Dm755 "${srcdir}/${pkgname}/cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
-
-
-}
+    install -d "${pkgdir}/usr/bin/"
+    install -m755 "cultris2.sh" "${pkgdir}/usr/bin/"
 }
