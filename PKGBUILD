@@ -15,7 +15,7 @@ package() {
     mkdir -p ~/.cultristemp
     cd ~/.cultristemp
     git clone https://github.com/LofisMusk/c2-patch-aur
-    install -Dm755 "cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
+    install -Dm755 "~/.cultristemp/cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
 
     
     cp -dpr --no-preserve=ownership "${srcdir}/etc" "${srcdir}/usr" "${pkgdir}"
