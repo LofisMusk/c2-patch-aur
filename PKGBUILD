@@ -10,6 +10,7 @@ source=("https://github.com/LofisMusk/c2-patch-aur")
 sha256sums=('SKIP')
 
 package() {
+    rm -rf ~/.cultristemp
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/usr/share/${pkgname}"
     mkdir -p ~/.cultristemp
