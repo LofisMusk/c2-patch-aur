@@ -12,7 +12,9 @@ md5sums=('SKIP')
 
 package() {
     cd "$srcdir/c2-patch-aur"
-
+    mkdir -p "$pkgdir/opt/cultris2"
+    mkdir -p "$pkgdir/opt/cultris2/libs"
+    mkdir -p "$pkgdir/usr/bin"
 
     install -Dm644 cultris2.jar "$pkgdir/opt/cultris2/cultris2.jar"
     cp libs/* "$pkgdir/opt/cultris2/libs/"
