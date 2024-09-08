@@ -11,6 +11,9 @@ sha256sums=('SKIP')
 
 
 package() {
+    mkdir -p "${pkgdir}/opt"
+    mkdir -p "${pkgdir}/usr/bin"
+    
     install -d "${pkgdir}/opt/${pkgname}/"
     install -m755 "cultris2.jar" "${pkgdir}/opt/${pkgname}/"
     cp -r "libs" "${pkgdir}/opt/${pkgname}/"
