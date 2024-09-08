@@ -12,7 +12,8 @@ sha256sums=('SKIP')
 
 package() {
 package() {
-
+    mkdir -p "${pkgdir}/opt"
+    mkdir -p "${pkgdir}/usr/bin"
     install -d "${pkgdir}/opt/cultris2"
 
 
