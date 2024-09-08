@@ -38,6 +38,6 @@ package() {
 
     # Install desktop entries
     install -Dm644 "${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
-    install -Dm644 "${pkgname}-settings}.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
+    install -Dm644 "${pkgname}-settings.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
     install -Dm644 "${pkgname}-colorpicker.desktop" "$pkgdir/usr/share/applications/${pkgname}-colorpicker.desktop"
 }
