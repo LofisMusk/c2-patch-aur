@@ -5,22 +5,22 @@ pkgdesc="Cultris II is one of the fastest Tetris®-clones ever! Train your refle
 arch=('x86_64')
 url="https://github.com/zDEFz/c2-patch"
 license=('none')
-depends=('java-runtime' 'openal')
+depends=('jdk-openjdk')
 source=("https://github.com/LofisMusk/c2-patch-aur")
 sha256sums=('SKIP')
 
 
 package() {
-   
-    mkdir -p "${pkgdir}/usr/bin"
-    mkdir -p "${pkgdir}/usr/share/${pkgname}"
-  mkdir "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
-  cd "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
-   git clone https://github.com/LofisMusk/c2-patch-aur
-   
-    install -Dm755 cultris2.sh "${pkgdir}/usr/bin"
+package() {
 
-    
-    cp -dpr --no-preserve=ownership "${srcdir}/etc" "${srcdir}/usr" "${pkgdir}"
-   rm -rf "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
+    install -d "$pkgdir/opt/cultris2"
+
+
+    install -Dm644 "$srcdir/$pkgname/cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
+    cp -r "$srcdir/$pkgname/libs" "$pkgdir/opt/cultris2/libs"
+
+    install -Dm755 "$srcdir/$pkgname/cultris2.sh" "$pkgdir/opt/cultris2/cultris2.sh"
+
+    ln -s /opt/cultris2/cultris2.sh "$pkgdir/usr/bin/cultris2"
+}
 }
