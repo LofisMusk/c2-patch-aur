@@ -1,3 +1,6 @@
+# Maintainer: mekambe <grubyogon10@gmail.com>
+
+
 pkgname=cultris2
 pkgver=1.0.0      
 pkgrel=1             
