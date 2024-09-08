@@ -6,7 +6,7 @@ arch=('x86_64')
 url="https://github.com/zDEFz/c2-patch"
 license=('none')
 depends=('jdk-openjdk')
-source=("https://github.com/LofisMusk/c2-patch-aur.git")
+source=("git+https://github.com/LofisMusk/c2-patch-aur.git")
 sha256sums=('SKIP')
 
 
