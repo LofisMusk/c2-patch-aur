@@ -1,5 +1,5 @@
 #!/bin/bash
-export DIR="$(/opt/cultris2)"  # Get the script's directory
+export DIR= "/opt/cultris2"  # Get the script's directory
 
 # Find the Java executable for JDK-17, excluding GraalVM versions
 export javaexec=$(find "$DIR/libs" -type f -name 'java' | grep 'jdk-17')
