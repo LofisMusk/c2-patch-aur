@@ -29,15 +29,15 @@ package() {
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
 
     # Install startup scripts
-    install -Dm755 "cultris2.sh" "$pkgdir/opt/cultris2/${pkgname}"
-    install -Dm755 "c2settings.sh" "$pkgdir/opt/cultris2/${pkgname}-settings"
-    install -Dm755 "colorpicker.sh" "$pkgdir/opt/cultris2/${pkgname}-colorpicker"
+    install -Dm755 "${pkgname}.sh" "$pkgdir/opt/cultris2/${pkgname}"
+    install -Dm755 "${pkgname}-settings.sh" "$pkgdir/opt/cultris2/${pkgname}-settings"
+    install -Dm755 "${pkgname}-colorpicker.sh" "$pkgdir/opt/cultris2/${pkgname}-colorpicker"
 
     # Install icon
     install -Dm644 "icon.png" "$pkgdir/opt/cultris2/icon.png"
 
     # Install desktop entries
-    install -Dm644 "cultris2.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
-    install -Dm644 "c2settings.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
-    install -Dm644 "colorpicker.desktop" "$pkgdir/usr/share/applications/${pkgname}-colorpicker.desktop"
+    install -Dm644 "${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+    install -Dm644 "${pkgname}-settings}.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
+    install -Dm644 "${pkgname}-colorpicker.desktop" "$pkgdir/usr/share/applications/${pkgname}-colorpicker.desktop"
 }
