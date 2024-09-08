@@ -18,14 +18,19 @@ package() {
     cd "$srcdir/c2-patch-aur"
 
     # Create necessary directories
+    install -d "$pkgdir/opt/cultris2/libs"
     install -d "$pkgdir/usr/bin"
     install -d "$pkgdir/usr/share/applications"
-    
-    #Copying settings and libs to the game directory
-    cp -rf {libs,settings} "$pkgdir/opt/${pkgname}/"
+    install -d "$pkgdir/opt/cultris2/settings"
 
     # Install JAR file
     install -Dm644 "cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
+
+    # Install libraries
+    cp -r libs/* "$pkgdir/opt/cultris2/libs/"
+
+    # Install settings
+    cp -r settings/* "$pkgdir/opt/cultris2/settings/"
 
     # Install startup scripts
     install -Dm755 "${pkgname}.sh" "$pkgdir/opt/cultris2/${pkgname}"
