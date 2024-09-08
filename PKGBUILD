@@ -23,21 +23,21 @@ package() {
     install -d "$pkgdir/usr/share/applications"
 
     # Install JAR file
-    install -Dm644 "$pkgdir/cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
+    install -Dm644 "cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
 
     # Install libraries
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
 
     # Install script
-    install -Dm755 "$pkgdir/cultris2.sh" "$pkgdir/usr/bin/cultris2"
+    install -Dm755 "cultris2.sh" "$pkgdir/usr/bin/cultris2"
 
     # Install icon
-    install -Dm644 "$pkgdir/icon.png" "$pkgdir/opt/cultris2/icon.png"
+    install -Dm644 "icon.png" "$pkgdir/opt/cultris2/icon.png"
 
     # Install desktop entries
-    install -Dm644 "$pkgdir/cultris2.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
-    install -Dm644 "$pkgdir/c2settings.desktop" "$pkgdir/usr/share/applications/c2settings.desktop"
-    install -Dm644 "$pkgdir/colorpicker.desktop" "$pkgdir/usr/share/applications/colorpicker.desktop"
+    install -Dm644 "cultris2.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+    install -Dm644 "c2settings.desktop" "$pkgdir/usr/share/applications/c2settings.desktop"
+    install -Dm644 "colorpicker.desktop" "$pkgdir/usr/share/applications/colorpicker.desktop"
 }
 
 # Add the .install file
