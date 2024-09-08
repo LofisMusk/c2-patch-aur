@@ -20,7 +20,10 @@ package() {
     # Create necessary directories
     install -d "$pkgdir/usr/bin"
     install -d "$pkgdir/usr/share/applications"
+    
+    #Copying settings and libs to the game directory
     cp -rf {libs,settings} "$pkgdir/opt/${pkgname}/"
+
     # Install JAR file
     install -Dm644 "cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
 
