@@ -19,8 +19,8 @@ package() {
     install -Dm644 "$srcdir/$pkgname/cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
     cp -r "$srcdir/$pkgname/libs" "$pkgdir/opt/cultris2/libs"
 
-    install -Dm755 "$srcdir/$pkgname/cultris2.sh" "$pkgdir/opt/cultris2/cultris2.sh"
+    install -Dm755 "$srcdir/$pkgname/cultris2.sh" "$pkgdir/usr/bin/cultris2.sh"
 
-    ln -s /opt/cultris2/cultris2.sh "$pkgdir/usr/bin/cultris2"
+
 }
 }
