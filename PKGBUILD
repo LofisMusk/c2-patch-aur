@@ -1,14 +1,13 @@
 pkgname=cultris2
 pkgver=1.0.0      
 pkgrel=1             
-pkgdesc="Cultris2 game package"
-arch=('any')
+pkgdesc="Cultris II is one of the fastest Tetris®-clones ever! Train your reflexes in single-player challenges, enjoy split-screen matches with friends, or compete online with the best. Featuring team play in various modes, stunning graphics, and stylish music, Cultris II redefines the classic experience."
+arch=('x86_64')
 url="https://github.com/LofisMusk/c2-patch-aur"
 license=('none')
 depends=(jdk-openjdk)
 makedepends=('git')
 source=("git+${url}.git")
-md5sums=('SKIP')
 
 package() {
     cd "$srcdir/c2-patch-aur"
