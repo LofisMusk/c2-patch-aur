@@ -13,7 +13,7 @@ package() {
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/usr/share/${pkgname}"
     
-    install -Dm755 "${pkgname}.sh" "${pkgdir}/usr/bin/${pkgname}"
+    install -Dm755 "cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
     
     cp -dpr --no-preserve=ownership "${srcdir}/etc" "${srcdir}/usr" "${pkgdir}"
 }
