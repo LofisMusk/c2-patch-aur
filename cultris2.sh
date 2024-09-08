@@ -1,11 +1,9 @@
 #!/bin/bash
-export DIR="$(dirname "$(readlink -f "$0")")"  # Get the script's directory
-
 # Find the Java executable for JDK-17, excluding GraalVM versions
-export javaexec=$(find "$DIR/libs" -type f -name 'java' | grep 'jdk-17')
+export javaexec=$(find "/opt/cultris2/libs" -type f -name 'java' | grep 'jdk-17')
 
 # Convert absolute paths to relative for output
-javaexec_rel="${javaexec#$DIR/}"
+javaexec_rel="${javaexec#/opt/cultris2/}"
 
 # Check user input to select the legacy Java version
 if [[ "$1" == "legacy" ]]; then
@@ -17,7 +15,7 @@ java_to_use=$javaexec
     echo "Using legacy JDK Java executable at: $java_to_use_rel"
 fi
 
-cd "$DIR"
+cd "/opt/cultris2"
 
 # Check if the chosen Java executable is found and launch the application
 if [ -f "$java_to_use" ]; then
