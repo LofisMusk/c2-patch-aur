@@ -9,16 +9,18 @@ depends=('java-runtime' 'openal')
 source=("https://github.com/LofisMusk/c2-patch-aur")
 sha256sums=('SKIP')
 
+
 package() {
-    rm -rf ~/.cultristemp
+   
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/usr/share/${pkgname}"
-    mkdir -p ~/.cultristemp
-    cd ~/.cultristemp
-    git clone https://github.com/LofisMusk/c2-patch-aur
-    install -Dm755 "~/.cultristemp/cultris2.sh" "${pkgdir}/usr/bin/cultris2.sh"
+  mkdir "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
+  cd "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
+   git clone https://github.com/LofisMusk/c2-patch-aur
+   
+    install -Dm755 cultris2.sh "${pkgdir}/usr/bin"
 
     
     cp -dpr --no-preserve=ownership "${srcdir}/etc" "${srcdir}/usr" "${pkgdir}"
-    rm -rf ~/.cultristemp
+   rm -rf "${pkgdir}/.cultris2tempfoldernoonewillknowlol"
 }
