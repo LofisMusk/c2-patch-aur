@@ -28,6 +28,9 @@ package() {
     # Install libraries
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
 
+    # Install settings
+    cp -r settings/* "$pkgdir/opt/cultris2/libs/"
+
     # Install startup scripts
     install -Dm755 "${pkgname}.sh" "$pkgdir/opt/cultris2/${pkgname}"
     install -Dm755 "${pkgname}-settings.sh" "$pkgdir/opt/cultris2/${pkgname}-settings"
