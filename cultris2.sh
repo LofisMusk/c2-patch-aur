@@ -1,3 +1,3 @@
 #!/bin/bash
 export DIR= "/opt/cultris2"  # Get the script's directory
-java -Djava.library.path="$DIR/libs/" -jar "$DIR/cultris2.jar"
+java -Djava.library.path="/opt/cultris2/libs/" -jar "/opt/cultris2/cultris2.jar"
