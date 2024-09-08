@@ -2,7 +2,7 @@
 export DIR="$(dirname "$(readlink -f "$0")")"  # Get the script's directory
 
 # Find the Java executable for JDK-17, excluding GraalVM versions
-export javaexec=$(find "$DIR/resources" -type f -name 'java' | grep 'jdk-17' | grep -v 'graalvm')
+export javaexec=$(find "$DIR/libs" -type f -name 'java' | grep 'jdk-17')
 
 # Convert absolute paths to relative for output
 javaexec_rel="${javaexec#$DIR/}"
@@ -21,7 +21,7 @@ cd "$DIR"
 
 # Check if the chosen Java executable is found and launch the application
 if [ -f "$java_to_use" ]; then
-    "$java_to_use" -Djava.library.path="$DIR/resources/libs/" -jar "$DIR/cultris2.jar"
+    "$java_to_use" -Djava.library.path="$DIR/libs/" -jar "$DIR/cultris2.jar"
 else
     echo "Java executable not found. Please ensure you've installed a JDK or GraalVM correctly in the resources directory."
 fi
