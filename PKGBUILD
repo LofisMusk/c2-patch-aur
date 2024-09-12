@@ -44,9 +44,4 @@ package() {
     install -Dm644 "${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
     install -Dm644 "${pkgname}-settings.desktop" "$pkgdir/usr/share/applications/${pkgname}-settings.desktop"
     install -Dm644 "${pkgname}-colorpicker.desktop" "$pkgdir/usr/share/applications/${pkgname}-colorpicker.desktop"
-
-    # Make symlinks for the executables
-    ln -s /opt/cultris2/$pkgname.sh $pkgdir/usr/bin/$pkgname.sh
-    ln -s /opt/cultris2/$pkgname-settings.sh $pkgdir/usr/bin/$pkgname-settings.sh
-    ln -s /opt/cultris2/$pkgname-colorpicker.sh $pkgdir/usr/bin/$pkgname-settings.sh
 }
