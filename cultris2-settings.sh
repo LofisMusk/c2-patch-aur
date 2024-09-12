@@ -5,4 +5,4 @@ fi
 
 export DIR="$(dirname "$(readlink -f "$0")")"  # Get the script's directory
 
-java -cp cultris2.jar c2settings
+env -C /opt/cultris2 java -cp cultris2.jar c2settings
