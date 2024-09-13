@@ -1,5 +1,5 @@
-# Maintainer: Your Name <your.email@example.com>
-# Contributor: Your Name <your.email@example.com>
+# Maintainer: mekambe <grubyogon10@gmail.com>
+# Contributor: Def
 # PKGBUILD for Cultris II
 
 pkgname=cultris2
