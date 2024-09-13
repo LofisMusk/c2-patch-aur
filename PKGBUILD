@@ -17,6 +17,8 @@ sha256sums=('SKIP')
 package() {
     cd "$srcdir/c2-patch-aur"
 
+    git checkout stable
+
     # Create necessary directories
     install -d "$pkgdir/opt/cultris2/libs"
     install -d "$pkgdir/usr/bin"
