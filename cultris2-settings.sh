@@ -5,4 +5,4 @@ fi
 JAVA_HOME="/usr/lib/jvm/java-17-temurin"
 export DIR="/opt/cultris2"
 
-env -C $DIR "$JAVA_HOME/bin/java" -cp cultris2.jar settings
+env -C $DIR "$JAVA_HOME/bin/java" -cp cultris2.jar c2settings

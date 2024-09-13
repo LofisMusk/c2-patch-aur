@@ -33,9 +33,9 @@ package() {
     cp -r settings/* "$pkgdir/opt/cultris2/settings/"
 
     # Install startup scripts
-    install -Dm755 "cultris2.sh" "$pkgdir/opt/cultris2/cultris2"
-    install -Dm755 "cultris2-settings.sh" "$pkgdir/opt/cultris2/cultris2-settings"
-    install -Dm755 "cultris2-colorpicker.sh" "$pkgdir/opt/cultris2/cultris2-colorpicker"
+    install -Dm755 "cultris2.sh" "$pkgdir/opt/cultris2/cultris2.sh"
+    install -Dm755 "cultris2-settings.sh" "$pkgdir/opt/cultris2/cultris2-settings.sh"
+    install -Dm755 "cultris2-colorpicker.sh" "$pkgdir/opt/cultris2/cultris2-colorpicker.sh"
 
     # Install icon
     install -Dm644 "icon.png" "$pkgdir/opt/cultris2/icon.png"
