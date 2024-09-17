@@ -9,11 +9,7 @@ grant {
     permission java.io.FilePermission "/opt/cultris2/libs/*", "read,write";
     permission java.io.FilePermission "/opt/cultris2/settings/*", "read,write";
     permission java.io.FilePermission "/opt/cultris2/settings/ruggu/*", "read,write";
-
-    // Allow specific file operations if needed
-    permission java.io.FilePermission "/opt/cultris2/libs/libbass.so", "read";
-    permission java.io.FilePermission "/opt/cultris2/libs/libLibLoader64.so", "read";
-    
+  
     // Allow network access if applicable
     permission java.net.SocketPermission "*", "connect,resolve";
 
