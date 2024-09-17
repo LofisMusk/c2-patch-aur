@@ -1,4 +1,4 @@
-# This is just the aur version of the c2-patch. All credits go to the c2-path contributors. Thanks for downloading, have a nice day!
+# This is just the aur version of the c2-patch. All credits go to the c2-patch contributors. Thanks for downloading, have a nice day!
 # c2-patch stable
 
 Non-Invasive, trimmed down version with only minor tweaks. 
