@@ -6,7 +6,7 @@ JAVA_HOME="/usr/lib/jvm/java-17-temurin"
 SECURITY_POLICY="$DIR/cultris2.policy"
 
 # Execute the Java application from the specified directory with security policy enabled
-env -C firejail --private "$DIR" "$JAVA_HOME/bin/java" \
+env -C "$DIR" "$JAVA_HOME/bin/java" \
     -Djava.library.path="$DIR/libs/" \
     -Djava.security.manager \
     -Djava.security.policy="$SECURITY_POLICY" \
