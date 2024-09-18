@@ -3,7 +3,7 @@
 # PKGBUILD for Cultris II
 
 pkgname=cultris2-git
-pkgver=1.0.6
+pkgver=1.0.7
 pkgrel=1
 pkgdesc="Cultris II is one of the fastest Tetris®-clones ever! Train your reflexes in single-player challenges, enjoy split-screen matches with friends, or compete online with the best."
 arch=('x86_64')
@@ -32,7 +32,7 @@ package() {
     install -Dm644 "cultris2.jar" "$pkgdir/opt/cultris2/cultris2.jar"
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
     cp -r settings/* "$pkgdir/opt/cultris2/settings/"
-
+    cp cultris2.policy "$pkgdir/opt/cultris2/"
     # Apply permissions to all files in settings directory
     chmod -R 777 "$pkgdir/opt/cultris2/settings"
 
