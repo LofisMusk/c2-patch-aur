@@ -6,9 +6,9 @@ grant {
     permission java.lang.RuntimePermission "preferences";
     
     // Allow reading and writing files in specific directories
-    permission java.io.FilePermission "/opt/cultris2/libs/*", "read,write";
-    permission java.io.FilePermission "/opt/cultris2/settings/*", "read,write";
-    permission java.io.FilePermission "/opt/cultris2/settings/ruggu/*", "read,write";
+    permission java.io.FilePermission "./libs/*", "read,write";
+    permission java.io.FilePermission "./settings/*", "read,write";
+    permission java.io.FilePermission "./settings/ruggu/*", "read,write";
   
     // Allow network access if applicable
     permission java.net.SocketPermission "*", "connect,resolve";
