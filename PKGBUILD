@@ -15,7 +15,7 @@ source=("git+https://github.com/LofisMusk/c2-patch-aur.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "$srcdir/$pkgname"
+  cd "$srcdir/c2-patch-aur"
   git describe --tags | sed 's/^v//;s/-/./g'
 }
 
