@@ -1,0 +1,36 @@
+grant {
+    // Allow reading and writing system properties
+    permission java.util.PropertyPermission "*", "read,write";
+
+    // Allow reading and writing preferences
+    permission java.lang.RuntimePermission "preferences";
+    
+    // Allow reading and writing files in specific directories
+    permission java.io.FilePermission "./libs/*", "read,write";
+    permission java.io.FilePermission "./settings/*", "read,write";
+    permission java.io.FilePermission "./settings/ruggu/*", "read,write";
+  
+    // Allow network access if applicable
+    permission java.net.SocketPermission "*", "connect,resolve";
+
+    // Allow loading libraries
+    permission java.lang.RuntimePermission "accessClassInPackage.*";
+    permission java.lang.RuntimePermission "accessDeclaredMembers";
+    permission java.lang.RuntimePermission "getenv.*";
+    permission java.lang.RuntimePermission "loadLibrary.*";
+
+    // Allow reflection
+    permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+
+    // Allow modifying threads
+    permission java.lang.RuntimePermission "modifyThread";
+
+    // Allow managing shutdown hooks
+    permission java.lang.RuntimePermission "shutdownHooks";
+
+    // Restricting display changes (may be limited)
+    // Deny permission to access display and graphics settings
+    permission java.awt.AWTPermission "accessEventQueue";
+    permission java.awt.AWTPermission "createRobot";
+    permission java.awt.AWTPermission "accessClipboard";
+};

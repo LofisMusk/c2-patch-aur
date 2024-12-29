@@ -3,7 +3,7 @@
 # PKGBUILD for Cultris II
 
 pkgname=cultris2-git
-pkgver=1.0.15
+pkgver=1.0.14.3.gad028af
 pkgrel=1
 pkgdesc="Cultris II is one of the fastest Tetris®-clones ever! Train your reflexes in single-player challenges, enjoy split-screen matches with friends, or compete online with the best."
 arch=('x86_64')
@@ -33,18 +33,15 @@ package() {
     cp -r libs/* "$pkgdir/opt/cultris2/libs/"
     cp -r settings/* "$pkgdir/opt/cultris2/settings/"
     cp cultris2.policy "$pkgdir/opt/cultris2/"
+
     # Apply permissions to all files in settings directory
     chmod -R 777 "$pkgdir/opt/cultris2/settings"
+    chmod -R 777 "$pkgdir/opt/cultris2"
 
     # Install startup scripts with executable permissions
-    cp -r "scripts/cultris2.sh" "$pkgdir/opt/cultris2/cultris2.sh"
-    cp -r "scripts/cultris2-settings.sh" "$pkgdir/opt/cultris2/cultris2-settings.sh"
-    cp -r "scripts/cultris2-colorpicker.sh" "$pkgdir/opt/cultris2/cultris2-colorpicker.sh"
-    
-    # Install to $PATH
-    cp -r "cultris2.sh" "$pkgdir/usr/bin/cultris2"
-    cp -r "cultris2-settings.sh" "$pkgdir/usr/bin/cultris2-setiings"
-    cp -r "cultris2-colorpicker.sh" "$pkgdir/usr/bin/cultris2-colorpicker"
+    install -d "$pkgdir/opt/cultris2/cultris2.sh"
+    install -d "$pkgdir/scripts/cultris2-settings.sh" "$pkgdir/opt/cultris2/cultris2-settings.sh"
+    install -d "$pkgdir/scripts/cultris2-colorpicker.sh" "$pkgdir/opt/cultris2/cultris2-colorpicker.sh"
 
     # Install icon and desktop entries
     cp -r "desktop-files/icon.png" "$pkgdir/opt/cultris2/icon.png"
