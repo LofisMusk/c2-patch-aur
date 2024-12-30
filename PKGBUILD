@@ -43,10 +43,6 @@ package() {
     install -Dm777 "scripts/cultris2-colorpicker.sh" "$pkgdir/opt/cultris2/cultris2-colorpicker.sh"
     install -Dm777 "scripts/cultris2-settings.sh" "$pkgdir/opt/cultris2/cultris2-settings.sh"
     
-    install -Dm777 "scripts/cultris2.sh" "$pkgdir/usr/bin/cultris2.sh"
-    install -Dm777 "scripts/cultris2-colorpicker.sh" "$pkgdir/usr/bin/cultris2-colorpicker.sh"
-    install -Dm777 "scripts/cultris2-settings.sh" "$pkgdir/usr/bin/cultris2-settings.sh"
-    
     # Install icon and desktop entries
     cp -r "desktop-files/icon.png" "$pkgdir/opt/cultris2/icon.png"
     cp -r "desktop-files/cultris2.desktop" "$pkgdir/usr/share/applications/cultris2.desktop"
