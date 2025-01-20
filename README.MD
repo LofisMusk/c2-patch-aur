@@ -1,3 +1,4 @@
+# Windows installer for Cultris2-patch
 # c2-patch stable
 
 To set up, please visit the setup guide at https://c2.tail.ws/.
