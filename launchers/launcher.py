@@ -1,17 +1,21 @@
-import os
+import subprocess
 import tkinter as tk
-from tkinter import messagebox
 
-# Funkcje uruchamiające odpowiednie pliki .bat
+# Funkcje uruchamiające odpowiednie pliki .exe
 def run_c2settings():
-    os.system("start launchers/Cultris2-Settings.exe")
+    run_silently(["launchers/Cultris2-Settings.exe"])
 
 def run_colorpicker():
-    os.system("start launchers/Cultris2-Colorpicker.exe")
+    run_silently(["launchers/Cultris2-Colorpicker.exe"])
 
 def run_cultris2():
-    os.system("start launchers/Cultris2-Patch.exe")
-    
+    run_silently(["launchers/Cultris2-Patch.exe"])
+
+# Funkcja uruchamiająca pliki bez otwierania CMD
+def run_silently(command):
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    subprocess.run(command, startupinfo=startupinfo, shell=True)
 
 # Stworzenie głównego okna aplikacji
 root = tk.Tk()
@@ -37,7 +41,7 @@ btn_cultris2.pack(pady=5)
 
 # Funkcja do zamykania aplikacji
 def close_launcher():
-        root.destroy()
+    root.destroy()
 
 # Przycisk do wyjścia
 btn_exit = tk.Button(root, text="Exit", font=("Arial", 12), command=close_launcher)
