@@ -2,5 +2,3 @@ to commit/
 build/
 dist/
 .vs
-launcher\launcher\bin
-launcher\launcher\obj

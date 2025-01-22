@@ -1,0 +1,15 @@
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\bin\Debug\net9.0-windows\launcher.exe
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\bin\Debug\net9.0-windows\launcher.deps.json
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\bin\Debug\net9.0-windows\launcher.runtimeconfig.json
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\bin\Debug\net9.0-windows\launcher.dll
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\bin\Debug\net9.0-windows\launcher.pdb
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.AssemblyInfoInputs.cache
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.AssemblyInfo.cs
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.csproj.CoreCompileInputs.cache
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.sourcelink.json
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.dll
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\refint\launcher.dll
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.pdb
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\launcher.genruntimeconfig.cache
+c:\Users\mekambe\Desktop\c2-patch-aur\launcher\launcher\obj\Debug\net9.0-windows\ref\launcher.dll
