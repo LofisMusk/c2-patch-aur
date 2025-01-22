@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "D+eeuzrVilE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mekambe\\Desktop\\c2-patch-aur\\launcher\\launcher.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mekambe\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.1\\microsoft.net.illink.tasks.9.0.1.nupkg.sha512",
+    "C:\\Users\\mekambe\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\9.0.1\\microsoft.netcore.app.runtime.win-x64.9.0.1.nupkg.sha512",
+    "C:\\Users\\mekambe\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\9.0.1\\microsoft.windowsdesktop.app.runtime.win-x64.9.0.1.nupkg.sha512",
+    "C:\\Users\\mekambe\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\9.0.1\\microsoft.aspnetcore.app.runtime.win-x64.9.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
