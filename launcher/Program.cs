@@ -9,11 +9,25 @@ namespace WindowsLauncher
     {
         public Program()
         {
+            // Ustawienia okna głównego
             this.Text = "Launcher - Choose Application";
             this.Size = new System.Drawing.Size(400, 300);
             this.StartPosition = FormStartPosition.CenterScreen;
-            Icon = new System.Drawing.Icon(Path.Combine(Application.StartupPath, "C:\\Users\\mekambe\\Desktop\\visual studio\\repos\\balls\\Resources\\cultris2-icon.ico"));
 
+            // Ścieżka do ikony
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string iconPath = Path.Combine(basePath, @"icon\cultris2-icon.ico");
+
+            if (File.Exists(iconPath))
+            {
+                this.Icon = new System.Drawing.Icon(iconPath); // Ustawienie ikony
+            }
+            else
+            {
+                MessageBox.Show($"Icon file not found: {iconPath}");
+            }
+
+            // Tworzenie przycisków
             Button btnC2Settings = new Button()
             {
                 Text = "Cultris 2 Settings",
@@ -46,12 +60,14 @@ namespace WindowsLauncher
             };
             btnExit.Click += (sender, e) => Application.Exit();
 
+            // Dodanie przycisków do formularza
             this.Controls.Add(btnC2Settings);
             this.Controls.Add(btnColorPicker);
             this.Controls.Add(btnCultris2);
             this.Controls.Add(btnExit);
         }
 
+        // Funkcja uruchamiająca aplikacje
         private void RunApplication(string relativePath)
         {
             string fullPath = Path.Combine(Application.StartupPath, relativePath);
@@ -68,8 +84,11 @@ namespace WindowsLauncher
         [STAThread]
         public static void Main()
         {
+            // Ustawienia aplikacji
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Uruchomienie głównego formularza
             Application.Run(new Program());
         }
     }

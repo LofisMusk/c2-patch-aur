@@ -6,10 +6,16 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-   
+    <SelfContained>true</SelfContained>
     <PublishSingleFile>true</PublishSingleFile>
-    <TrimUnusedDependencies>true</TrimUnusedDependencies>
-    <TrimMode>Link</TrimMode>
+    <ApplicationIcon>icon/cultris2-icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+<ItemGroup>
+  <None Include="icon\cultris2-icon.ico">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+
 
 </Project>
