@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+   
+    <PublishSingleFile>true</PublishSingleFile>
+    <TrimUnusedDependencies>true</TrimUnusedDependencies>
+    <TrimMode>Link</TrimMode>
   </PropertyGroup>
 
 </Project>
