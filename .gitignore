@@ -2,6 +2,5 @@ to commit/
 build/
 dist/
 .vs
-launcher/obj/Debug/
-launcher/obj/Release/
+launcher/obj/
 launcher/bin/
