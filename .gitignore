@@ -6,5 +6,4 @@ launcher/obj
 launcher/bin
 123
 .gitignore
-installer script.iss
 Output/
