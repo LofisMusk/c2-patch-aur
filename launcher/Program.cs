@@ -33,7 +33,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 30),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnC2Settings.Click += (sender, e) => RunApplication(@"C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Settings.exe");
+            btnC2Settings.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Settings.exe");
 
             Button btnColorPicker = new Button()
             {
@@ -41,7 +41,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 80),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnColorPicker.Click += (sender, e) => RunApplication(@"C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Colorpicker.exe");
+            btnColorPicker.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Colorpicker.exe");
 
             Button btnCultris2 = new Button()
             {
@@ -49,7 +49,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 130),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnCultris2.Click += (sender, e) => RunApplication(@"C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Patch.exe");
+            btnCultris2.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Patch.exe");
 
             Button btnExit = new Button()
             {
@@ -69,7 +69,9 @@ namespace WindowsLauncher
         // Funkcja uruchamiająca aplikacje
         private void RunApplication(string relativePath)
         {
-            string fullPath = Path.Combine(Application.StartupPath, relativePath);
+        
+        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+
             if (File.Exists(fullPath))
             {
                 Process.Start(fullPath);
