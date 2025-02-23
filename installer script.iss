@@ -8,9 +8,12 @@
 #define MyAppExeName "launcher.exe"
 
 [Setup]
+; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
+; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{38281810-7E78-4C0C-8518-C2328ED7A8E6}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -18,11 +21,19 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\Cultris-2-Patch
 DisableDirPage=yes
 UninstallDisplayIcon={app}\{#MyAppExeName}
+; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
+; on anything but x64 and Windows 11 on Arm.
 ArchitecturesAllowed=x64compatible
+; "ArchitecturesInstallIn64BitMode=x64compatible" requests that the
+; install be done in "64-bit mode" on x64 or Windows 11 on Arm,
+; meaning it should use the native 64-bit Program Files directory and
+; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=C:\Users\mekambe\Desktop\c2-patch-aur\license.txt
+; Uncomment the following line to run in non administrative install mode (install for current user only).
+;PrivilegesRequired=lowest
 OutputBaseFilename=cultris2-patch
 SetupIconFile=C:\Users\mekambe\Desktop\c2-patch-aur\icons\ico\cultris2-icon.ico
 SolidCompression=yes
@@ -41,6 +52,7 @@ Source: "C:\Program Files (x86)\Cultris2\bin\Cultris2-Patch.exe"; DestDir: "{app
 Source: "C:\Program Files (x86)\Cultris2\bin\Cultris2-Settings.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "C:\Users\mekambe\Desktop\c2-patch-aur\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\mekambe\Desktop\c2-patch-aur\settings\*"; DestDir: "{app}\settings"; Flags: ignoreversion recursesubdirs createallsubdirs
+; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -49,42 +61,3 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
-[Code]
-const
-  JDK_URL = 'https://api.adoptium.net/v3/installer/latest/17/ga/windows/x64/jdk/hotspot/normal/eclipse?project=jdk';
-  JDK_OUTPUT = ExpandConstant('{tmp}\jdk-installer.msi');
-  JDK_INSTALL_DIR = ExpandConstant('{app}\resources\jdk');
-
-procedure DownloadJDK();
-var
-  ResultCode: Integer;
-begin
-  // Notify user of JDK installation
-  MsgBox('Downloading and installing Java JDK 17. Please wait...', mbInformation, MB_OK);
-
-  // Download JDK Temurin 17
-  if not DownloadFile(JDK_URL, JDK_OUTPUT) then
-  begin
-    MsgBox('Failed to download JDK. Please check your internet connection.', mbError, MB_OK);
-    Abort;
-  end;
-
-  // Install JDK silently in specified directory
-  if not ShellExec('', 'msiexec.exe', '/i "' + JDK_OUTPUT + '" INSTALLDIR="' + JDK_INSTALL_DIR + '" /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
-  begin
-    MsgBox('Failed to install JDK.', mbError, MB_OK);
-    Abort;
-  end;
-
-  // Set JAVA_HOME and add to system PATH
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'JAVA_HOME', JDK_INSTALL_DIR);
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path', JDK_INSTALL_DIR + '\bin');
-end;
-
-procedure CurStepChanged(CurStep: TSetupStep);
-begin
-  if CurStep = ssInstall then
-  begin
-    DownloadJDK();
-  end;
-end;
