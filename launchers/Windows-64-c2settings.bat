@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGyX8VAjFBZRRwWPPm6GIrAP4/z0/9aE8AANVfY8cMLaz6ayLOEG5EbscIQ+6llPlN8eBQgKMyGuehs9p2lR+GGdMqc=
+::Zh4grVQjdCyDJGmW+0UiKRYUag2OOXiGJaAQ/Pry/KfV730cQOE3RI3S1IitNewH+Ez3J9s+025OkcULH1VdZhfL
 ::YB416Ek+ZG8=
 ::
 ::
@@ -35,7 +35,7 @@
 setlocal enabledelayedexpansion
 
 rem Set the base directory to search for Java executables
-set "baseDir=.\resources"
+set "baseDir=..\resources"
 set "javaExe=bin\java.exe"
 set "latestDir="
 
