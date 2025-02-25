@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\Cultris-2-Patch
+DefaultDirName={localappdata}\Cultris2-Patch
 DisableDirPage=yes
 UninstallDisplayIcon={app}\{#MyAppExeName}
 ; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
@@ -47,11 +47,13 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\mekambe\Desktop\c2-patch-aur\launcher\bin\Release\net9.0-windows\win-x64\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Program Files (x86)\Cultris2\bin\Cultris2-Colorpicker.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "C:\Program Files (x86)\Cultris2\bin\Cultris2-Patch.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "C:\Program Files (x86)\Cultris2\bin\Cultris2-Settings.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Colorpicker.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Patch.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Users\mekambe\Desktop\c2-patch-aur\launchers\Cultris2-Settings.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Users\mekambe\Desktop\c2-patch-aur\cultris2.jar"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "C:\Users\mekambe\Desktop\c2-patch-aur\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\mekambe\Desktop\c2-patch-aur\settings\*"; DestDir: "{app}\settings"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\mekambe\Downloads\jdk-17.0.8+7-jre\*"; DestDir: "{app}\resources\jdk-17.0.8+7-jre\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

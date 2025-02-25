@@ -33,7 +33,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 30),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnC2Settings.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Settings.exe");
+            btnC2Settings.Click += (sender, e) => RunApplication("%LocalAppData%\\Cultris2-Patch\\bin\\Cultris2-Settings.exe");
 
             Button btnColorPicker = new Button()
             {
@@ -41,7 +41,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 80),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnColorPicker.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Colorpicker.exe");
+            btnColorPicker.Click += (sender, e) => RunApplication("%LocalAppData%\\Cultris2-Patch\\bin\\Cultris2-Colorpicker.exe");
 
             Button btnCultris2 = new Button()
             {
@@ -49,7 +49,7 @@ namespace WindowsLauncher
                 Location = new System.Drawing.Point(100, 130),
                 Size = new System.Drawing.Size(200, 40)
             };
-            btnCultris2.Click += (sender, e) => RunApplication(@"C:\Program Files\Cultris-2-Patch\bin\Cultris2-Patch.exe");
+            btnCultris2.Click += (sender, e) => RunApplication("%LocalAppData%\\Cultris2-Patch\\bin\\Cultris2-Patch.exe");
 
             Button btnExit = new Button()
             {
@@ -60,17 +60,17 @@ namespace WindowsLauncher
             btnExit.Click += (sender, e) => Application.Exit();
 
             // Dodanie przycisków do formularza
+            this.Controls.Add(btnCultris2);
             this.Controls.Add(btnC2Settings);
             this.Controls.Add(btnColorPicker);
-            this.Controls.Add(btnCultris2);
             this.Controls.Add(btnExit);
         }
 
         // Funkcja uruchamiająca aplikacje
-        private void RunApplication(string relativePath)
+        private void RunApplication(string path)
         {
-        
-        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            // Expand any environment variables in the path (e.g. %LocalAppData%)
+            string fullPath = Environment.ExpandEnvironmentVariables(path);
 
             if (File.Exists(fullPath))
             {
