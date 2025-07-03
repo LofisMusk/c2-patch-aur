@@ -31,8 +31,9 @@ jobs:
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 777 ~/.ssh/id_rsa
+        echo "{{ variables.SSH_CONFIG }}" > ~/.ssh/config
+        echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
+        chmod 777 ~/.ssh/aur
         ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
 
     - name: Clone AUR repo
