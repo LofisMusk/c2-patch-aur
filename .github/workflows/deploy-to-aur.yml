@@ -1,0 +1,32 @@
+name: Deploy to AUR
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+
+    - name: Clone AUR repo
+      run: |
+        git clone ssh://aur@aur.archlinux.org/cultris2-git aur-repo
+        cp -r ./* aur-repo/
+        cd aur-repo
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add .
+        git commit -m "Update from GitHub: ${{ github.sha }}" || echo "Nothing to commit"
+        git push
