@@ -34,7 +34,7 @@ jobs:
         echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
         echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
         chmod 777 ~/.ssh/aur
-        ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+        ssh-keyscan aur.archlinux.org
 
     - name: Clone AUR repo
       run: |
