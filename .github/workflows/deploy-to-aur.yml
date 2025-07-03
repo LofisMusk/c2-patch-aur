@@ -2,7 +2,8 @@ name: Deploy to AUR
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - stable
 
 jobs:
   deploy:
