@@ -16,6 +16,7 @@ jobs:
 
     - name: Set up SSH
       run: |
+        pacman -Sy openssh git --noconfirm
         mkdir -p ~/.ssh
         echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
