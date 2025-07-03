@@ -39,7 +39,9 @@ jobs:
         chmod 644 ~/.ssh/known_hosts
 
     - name: Test SSH connection
-      run: ssh -T aur@aur.archlinux.org || true
+      run: |
+        ls ~/.ssh/config
+        ssh -T aur@aur.archlinux.org || true
 
     - name: Clone AUR repo
       run: |
