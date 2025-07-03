@@ -18,6 +18,16 @@ jobs:
       run: |
         pacman -Sy --noconfirm base-devel git openssh
 
+    - name: Check if secret is loaded
+      run: |
+        if [ -z "${{ secrets.AUR_SSH_PRIVATE_KEY }}" ]; then
+        echo "❌ Secret is empty or missing"
+        exit 1
+        else
+        echo "✅ Secret exists and is loaded"
+        echo "Length: $(echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" | wc -c) characters"
+        fi
+
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
