@@ -31,7 +31,7 @@ jobs:
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_CONFIG" > ~/.ssh/config
+        echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
         echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
         chmod 777 ~/.ssh/aur
         ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
