@@ -14,12 +14,15 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
 
+    - name: Download dependencies
+      run: |
+        pacman -Sy --noconfirm base-devel git openssh
+
     - name: Set up SSH
       run: |
-        pacman -Sy openssh git --noconfirm
         mkdir -p ~/.ssh
         echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        chmod 777 ~/.ssh/id_rsa
         ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
 
     - name: Clone AUR repo
