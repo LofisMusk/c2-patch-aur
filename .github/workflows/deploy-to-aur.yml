@@ -31,10 +31,15 @@ jobs:
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
         echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
-        chmod 777 ~/.ssh/aur
-        ssh-keyscan aur.archlinux.org
+        chmod 600 ~/.ssh/aur
+        echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
+        chmod 600 ~/.ssh/config
+        ssh-keyscan -t rsa aur.archlinux.org >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+
+    - name: Test SSH connection
+      run: ssh -T aur@aur.archlinux.org || true
 
     - name: Clone AUR repo
       run: |
