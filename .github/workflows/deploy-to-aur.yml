@@ -19,10 +19,9 @@ jobs:
         working-directory: ${{ github.workspace }}
 
     env:
-      UPSTREAM_REPO: zDEFz/c2-patch
       UPSTREAM_URL: https://github.com/zDEFz/c2-patch.git
-      AUR_PKG_NAME: cultris2-git
       AUR_PUSH_URL: ssh://aur@aur.archlinux.org/cultris2-git.git
+      GIT_SSH_COMMAND: ssh -F /root/.ssh/config -o UserKnownHostsFile=/root/.ssh/known_hosts -o StrictHostKeyChecking=yes
 
     steps:
       - name: Install deps
@@ -38,19 +37,17 @@ jobs:
       - name: Prepare SSH for AUR
         run: |
           set -euo pipefail
+          mkdir -p /root/.ssh
+          chmod 700 /root/.ssh
 
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
+          echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > /root/.ssh/aur
+          chmod 600 /root/.ssh/aur
 
-          echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
-          chmod 600 ~/.ssh/aur
+          echo "${{ vars.SSH_CONFIG }}" > /root/.ssh/config
+          chmod 600 /root/.ssh/config
 
-          echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
-          chmod 600 ~/.ssh/config
-
-          ssh-keyscan -t ed25519,rsa aur.archlinux.org > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
+          ssh-keyscan -t ed25519,rsa aur.archlinux.org > /root/.ssh/known_hosts
+          chmod 644 /root/.ssh/known_hosts
 
       - name: Compute upstream version (revcount + shorthash)
         id: ver
@@ -60,12 +57,10 @@ jobs:
           git clone --filter=blob:none --no-checkout "$UPSTREAM_URL" /tmp/upstream
           cd /tmp/upstream
           git checkout -q HEAD
-
           COMMIT="$(git rev-parse HEAD)"
           SHORT="$(git rev-parse --short HEAD)"
           COUNT="$(git rev-list --count HEAD)"
           VERSION="r${COUNT}.${SHORT}"
-
           echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
@@ -122,26 +117,24 @@ jobs:
           git add PKGBUILD .SRCINFO
           git commit -m "bump: upstream ${{ steps.ver.outputs.version }}"
 
-
       - name: Push to AUR
         run: |
           set -euo pipefail
           cd "$GITHUB_WORKSPACE"
-          test -d .git
 
           if ! git log -1 --pretty=%B | grep -q "^bump: upstream "; then
             exit 0
           fi
 
           rm -rf /tmp/aur
-          git clone ssh://aur@aur.archlinux.org/cultris2-git.git /tmp/aur
+          git clone "$AUR_PUSH_URL" /tmp/aur
           cd /tmp/aur
 
           cp -f "$GITHUB_WORKSPACE/PKGBUILD" .
           cp -f "$GITHUB_WORKSPACE/.SRCINFO" .
 
-          git config user.name "github-actions"
-          git config user.email "grubyogon10@gmail.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add PKGBUILD .SRCINFO
           git commit -m "bump: upstream ${{ steps.ver.outputs.version }}" || exit 0
