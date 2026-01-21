@@ -3,7 +3,7 @@ name: Sync upstream to AUR
 on:
   workflow_dispatch:
   schedule:
-    - cron: "40 11 * * *"  # Every day at 03:15 UTC
+    - cron: "40 11 * * *"
 
 permissions:
   contents: write
@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: archlinux:base-devel
+
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
 
     env:
       UPSTREAM_REPO: zDEFz/c2-patch
@@ -56,19 +60,17 @@ jobs:
           echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-          echo "Upstream commit: $COMMIT"
-          echo "Upstream version: $VERSION"
-
       - name: Update PKGBUILD and regenerate .SRCINFO (non-root)
         run: |
           set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
           test -f PKGBUILD
+          test -d .git
 
           NEW_COMMIT="${{ steps.ver.outputs.commit }}"
           NEW_VER="${{ steps.ver.outputs.version }}"
 
           if grep -qE "^_commit=${NEW_COMMIT}$" PKGBUILD && grep -qE "^pkgver=${NEW_VER}$" PKGBUILD; then
-            echo "No changes needed (already at $NEW_VER / $NEW_COMMIT)."
             exit 0
           fi
 
@@ -78,7 +80,11 @@ jobs:
             sed -i "1i _commit=${NEW_COMMIT}" PKGBUILD
           fi
 
-          sed -i "s/^pkgver=.*/pkgver=${NEW_VER}/" PKGBUILD
+          if grep -qE "^pkgver=" PKGBUILD; then
+            sed -i "s/^pkgver=.*/pkgver=${NEW_VER}/" PKGBUILD
+          else
+            printf "pkgver=%s\n" "$NEW_VER" >> PKGBUILD
+          fi
 
           if grep -qE "^pkgrel=" PKGBUILD; then
             sed -i "s/^pkgrel=.*/pkgrel=1/" PKGBUILD
@@ -88,20 +94,19 @@ jobs:
 
           id -u builder >/dev/null 2>&1 || useradd -m -u 1000 builder
           chown -R builder:builder "$GITHUB_WORKSPACE"
-
           su - builder -c "cd '$GITHUB_WORKSPACE' && makepkg --printsrcinfo" > .SRCINFO
-
-          echo "Updated PKGBUILD + .SRCINFO to ${NEW_VER}"
-
 
       - name: Commit changes (if any)
         run: |
           set -euo pipefail
-          git config --global user.name  "github-actions[bot]"
+          cd "$GITHUB_WORKSPACE"
+          test -d .git
+
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           if git diff --quiet; then
-            echo "No local changes to commit."
             exit 0
           fi
 
@@ -111,14 +116,12 @@ jobs:
       - name: Push to AUR
         run: |
           set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          test -d .git
 
-          if git log -1 --pretty=%B | grep -q "bump: upstream"; then
-            :
-          else
-            echo "No bump commit present; skipping AUR push."
+          if ! git log -1 --pretty=%B | grep -q "^bump: upstream "; then
             exit 0
           fi
-
 
           rm -rf /tmp/aur
           git clone "$AUR_PUSH_URL" /tmp/aur
@@ -127,13 +130,9 @@ jobs:
           cp -f "$GITHUB_WORKSPACE/PKGBUILD" .
           cp -f "$GITHUB_WORKSPACE/.SRCINFO" .
 
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add PKGBUILD .SRCINFO
-          git commit -m "bump: upstream ${{ steps.ver.outputs.version }}" || {
-            echo "Nothing to commit to AUR."
-            exit 0
-          }
-
+          git commit -m "bump: upstream ${{ steps.ver.outputs.version }}" || exit 0
           git push
