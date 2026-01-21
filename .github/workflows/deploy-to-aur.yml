@@ -21,7 +21,7 @@ jobs:
     env:
       UPSTREAM_URL: https://github.com/zDEFz/c2-patch.git
       MIRROR_BRANCH: upstream-mirror
-      MAIN_BRANCH: main
+      MAIN_BRANCH: stable
       AUR_PUSH_URL: ssh://aur@aur.archlinux.org/cultris2-git.git
 
     steps:
