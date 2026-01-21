@@ -1,55 +1,142 @@
-name: Deploy to AUR
+name: Sync upstream to AUR
 
 on:
-  push:
-    branches: 
-      - stable
+  workflow_dispatch:
+  schedule:
+    - cron: "15 3 * * *"
+
+permissions:
+  contents: write
 
 jobs:
-  deploy:
+  sync:
     runs-on: ubuntu-latest
-    container: archlinux:latest
+    container:
+      image: archlinux:base-devel
+
+    env:
+      UPSTREAM_REPO: zDEFz/c2-patch
+      UPSTREAM_URL: https://github.com/zDEFz/c2-patch.git
+      AUR_PKG_NAME: cultris2-git
+      AUR_PUSH_URL: ssh://aur@aur.archlinux.org/cultris2-git.git
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Install deps
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm git openssh
 
-    - name: Download dependencies
-      run: |
-        pacman -Sy --noconfirm base-devel git openssh
+      - name: Checkout packaging repo (this repo)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Check if secret is loaded
-      run: |
-        if [ -z "${{ secrets.AUR_SSH_PRIVATE_KEY }}" ]; then
-        echo "❌ Secret is empty or missing"
-        exit 1
-        else
-        echo "✅ Secret exists and is loaded"
-        echo "Length: $(echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" | wc -c) characters"
-        fi
+      - name: Prepare SSH for AUR
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H aur.archlinux.org >> ~/.ssh/known_hosts
 
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
-        chmod 600 ~/.ssh/aur
-        echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
-        chmod 600 ~/.ssh/config
-        ssh-keyscan -t rsa aur.archlinux.org >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts
+      - name: Compute upstream version (revcount + shorthash)
+        id: ver
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/upstream
+          git clone --filter=blob:none --no-checkout "$UPSTREAM_URL" /tmp/upstream
+          cd /tmp/upstream
+          git checkout -q HEAD
 
-    - name: Test SSH connection
-      run: |
-        ls ~/.ssh/config
-        ssh -T aur@aur.archlinux.org || true
+          COMMIT="$(git rev-parse HEAD)"
+          SHORT="$(git rev-parse --short HEAD)"
+          COUNT="$(git rev-list --count HEAD)"
+          VERSION="r${COUNT}.${SHORT}"
 
-    - name: Clone AUR repo
-      run: |
-        git clone ssh://aur@aur.archlinux.org/cultris2-git aur-repo
-        cp -r ./* aur-repo/
-        cd aur-repo
-        git config user.name "GitHub Action"
-        git config user.email "action@github.com"
-        git add .
-        git commit -m "Update from GitHub: ${{ github.sha }}" || echo "Nothing to commit"
-        git push
+          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          echo "Upstream commit: $COMMIT"
+          echo "Upstream version: $VERSION"
+
+      - name: Update PKGBUILD (pkgver/pkgrel/_commit) and regenerate .SRCINFO
+        run: |
+          set -euo pipefail
+
+          test -f PKGBUILD
+
+          NEW_COMMIT="${{ steps.ver.outputs.commit }}"
+          NEW_VER="${{ steps.ver.outputs.version }}"
+
+          if grep -qE "^_commit=${NEW_COMMIT}$" PKGBUILD && grep -qE "^pkgver=${NEW_VER}$" PKGBUILD; then
+            echo "No changes needed (already at $NEW_VER / $NEW_COMMIT)."
+            exit 0
+          fi
+
+          if grep -qE "^_commit=" PKGBUILD; then
+            sed -i "s/^_commit=.*/_commit=${NEW_COMMIT}/" PKGBUILD
+          else
+
+                       sed -i "1i _commit=${NEW_COMMIT}" PKGBUILD
+          fi
+
+          if grep -qE "^pkgver=" PKGBUILD; then
+            sed -i "s/^pkgver=.*/pkgver=${NEW_VER}/" PKGBUILD
+          else
+            echo "ERROR: PKGBUILD has no pkgver= line. Add it."
+            exit 1
+          fi
+
+          if grep -qE "^pkgrel=" PKGBUILD; then
+            sed -i "s/^pkgrel=.*/pkgrel=1/" PKGBUILD
+          else
+            echo "pkgrel=1" >> PKGBUILD
+          fi
+
+          makepkg --printsrcinfo > .SRCINFO
+
+          echo "Updated PKGBUILD + .SRCINFO to ${NEW_VER}"
+
+      - name: Commit changes (if any)
+        run: |
+          set -euo pipefail
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No local changes to commit."
+            exit 0
+          fi
+
+          git add PKGBUILD .SRCINFO
+          git commit -m "bump: upstream ${{ steps.ver.outputs.version }}"
+
+      - name: Push to AUR
+        run: |
+          set -euo pipefail
+
+          if git log -1 --pretty=%B | grep -q "bump: upstream"; then
+            :
+          else
+            echo "No bump commit present; skipping AUR push."
+            exit 0
+          fi
+
+
+          rm -rf /tmp/aur
+          git clone "$AUR_PUSH_URL" /tmp/aur
+          cd /tmp/aur
+
+          cp -f "$GITHUB_WORKSPACE/PKGBUILD" .
+          cp -f "$GITHUB_WORKSPACE/.SRCINFO" .
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add PKGBUILD .SRCINFO
+          git commit -m "bump: upstream ${{ steps.ver.outputs.version }}" || {
+            echo "Nothing to commit to AUR."
+            exit 0
+          }
+
+          git push
