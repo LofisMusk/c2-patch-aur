@@ -113,6 +113,11 @@ jobs:
           git add PKGBUILD .SRCINFO
           git commit -m "bump: upstream ${{ steps.ver.outputs.version }}"
 
+
+      - name: Test SSH to AUR
+        run: |
+          ssh -T aur@aur.archlinux.org || true
+
       - name: Push to AUR
         run: |
           set -euo pipefail
@@ -124,14 +129,14 @@ jobs:
           fi
 
           rm -rf /tmp/aur
-          git clone "$AUR_PUSH_URL" /tmp/aur
+          git clone ssh://aur@aur.archlinux.org/cultris2-git.git /tmp/aur
           cd /tmp/aur
 
           cp -f "$GITHUB_WORKSPACE/PKGBUILD" .
           cp -f "$GITHUB_WORKSPACE/.SRCINFO" .
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "grubyogon10@gmail.com"
 
           git add PKGBUILD .SRCINFO
           git commit -m "bump: upstream ${{ steps.ver.outputs.version }}" || exit 0
