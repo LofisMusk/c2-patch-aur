@@ -1,6 +1,6 @@
 to commit/
 build/
 dist/
-.vs
+.vscode
 launcher/obj/
 launcher/bin/

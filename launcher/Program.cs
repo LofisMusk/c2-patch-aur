@@ -12,7 +12,7 @@ namespace WindowsLauncher
             this.Text = "Launcher - Choose Application";
             this.Size = new System.Drawing.Size(400, 300);
             this.StartPosition = FormStartPosition.CenterScreen;
-            Icon = new System.Drawing.Icon(Path.Combine(Application.StartupPath, "C:\\Users\\mekambe\\Desktop\\visual studio\\repos\\balls\\Resources\\cultris2-icon.ico"));
+            Icon = new System.Drawing.Icon(Path.Combine(Application.StartupPath, "icons\\ico\\cultris2-icon.ico"));
 
             Button btnC2Settings = new Button()
             {
