@@ -59,10 +59,9 @@ jobs:
           echo "Upstream commit: $COMMIT"
           echo "Upstream version: $VERSION"
 
-      - name: Update PKGBUILD (pkgver/pkgrel/_commit) and regenerate .SRCINFO
+      - name: Update PKGBUILD and regenerate .SRCINFO (non-root)
         run: |
           set -euo pipefail
-
           test -f PKGBUILD
 
           NEW_COMMIT="${{ steps.ver.outputs.commit }}"
@@ -76,16 +75,10 @@ jobs:
           if grep -qE "^_commit=" PKGBUILD; then
             sed -i "s/^_commit=.*/_commit=${NEW_COMMIT}/" PKGBUILD
           else
-
-                       sed -i "1i _commit=${NEW_COMMIT}" PKGBUILD
+            sed -i "1i _commit=${NEW_COMMIT}" PKGBUILD
           fi
 
-          if grep -qE "^pkgver=" PKGBUILD; then
-            sed -i "s/^pkgver=.*/pkgver=${NEW_VER}/" PKGBUILD
-          else
-            echo "ERROR: PKGBUILD has no pkgver= line. Add it."
-            exit 1
-          fi
+          sed -i "s/^pkgver=.*/pkgver=${NEW_VER}/" PKGBUILD
 
           if grep -qE "^pkgrel=" PKGBUILD; then
             sed -i "s/^pkgrel=.*/pkgrel=1/" PKGBUILD
@@ -93,9 +86,13 @@ jobs:
             echo "pkgrel=1" >> PKGBUILD
           fi
 
-          makepkg --printsrcinfo > .SRCINFO
+          id -u builder >/dev/null 2>&1 || useradd -m -u 1000 builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+
+          su - builder -c "cd '$GITHUB_WORKSPACE' && makepkg --printsrcinfo" > .SRCINFO
 
           echo "Updated PKGBUILD + .SRCINFO to ${NEW_VER}"
+
 
       - name: Commit changes (if any)
         run: |
