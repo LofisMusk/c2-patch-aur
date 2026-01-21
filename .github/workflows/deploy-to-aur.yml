@@ -95,9 +95,9 @@ jobs:
             fi
           }
 
-          copy_dir "libs"
-          copy_dir "settings"
-          copy_file "cultris2.jar"
+          copy_dir "resources/libs" "libs"
+          copy_dir "settings" "settings"
+          copy_file "cultris2.jar" "cultris2.jar"
 
       - name: Commit upstream payload update (if any)
         env:
