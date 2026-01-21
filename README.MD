@@ -1,4 +1,8 @@
+# How to download it on archlinux?
+Just use `yay -S cultris2-git`
+
 # This is just the aur version of the c2-patch. All credits go to the c2-patch contributors. Thanks for downloading, have a nice day!
+
 # c2-patch stable
 
 Non-Invasive, trimmed down version with only minor tweaks. 
