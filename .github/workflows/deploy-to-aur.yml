@@ -37,11 +37,20 @@ jobs:
 
       - name: Prepare SSH for AUR
         run: |
+          set -euo pipefail
+
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H aur.archlinux.org >> ~/.ssh/known_hosts
+
+          echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/aur
+          chmod 600 ~/.ssh/aur
+
+          echo "${{ vars.SSH_CONFIG }}" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+          ssh-keyscan -t ed25519,rsa aur.archlinux.org > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
 
       - name: Compute upstream version (revcount + shorthash)
         id: ver
@@ -113,10 +122,6 @@ jobs:
           git add PKGBUILD .SRCINFO
           git commit -m "bump: upstream ${{ steps.ver.outputs.version }}"
 
-
-      - name: Test SSH to AUR
-        run: |
-          ssh -T aur@aur.archlinux.org || true
 
       - name: Push to AUR
         run: |
