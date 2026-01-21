@@ -73,6 +73,8 @@ jobs:
           GIT_SSH_COMMAND: ssh -i /root/.ssh/github -o UserKnownHostsFile=/root/.ssh/known_hosts_github -o StrictHostKeyChecking=yes
         run: |
           set -euo pipefail
+          git config --global user.email grubyogon10@gmail.com
+          git config --global user.name gh_actions_upstream
           git checkout "${MAIN_BRANCH}"
           git pull origin "${MAIN_BRANCH}"
           git merge --no-ff -m "sync upstream" "${MIRROR_BRANCH}" || true
@@ -86,8 +88,6 @@ jobs:
         id: ver
         run: |
           set -euo pipefail
-          git config --global user.email grubyogon10@gmail.com
-          git config --global user.name gh_actions_upstream
           git checkout "${MIRROR_BRANCH}"
           COMMIT="$(git rev-parse HEAD)"
           SHORT="$(git rev-parse --short HEAD)"
